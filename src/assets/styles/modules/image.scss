@@ -1,0 +1,30 @@
+/**
+ * 图片相关快捷样式类
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+.mpm-bg {
+  backface-visibility: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  line-height: 1;
+
+  &.size-cover {
+    background-size: cover;
+  }
+
+  &.size-contain {
+    background-size: contain;
+  }
+
+  &.position-top {
+    background-position: center top;
+  }
+
+  &.position-bottom {
+    background-position: center bottom;
+  }
+}

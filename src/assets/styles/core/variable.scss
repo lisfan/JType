@@ -1,0 +1,85 @@
+/**
+ * 样式变量定义
+ * [注]变量名前需要加上'$'前缀，以方便与其他类型定义区分
+ * [注]色调命名约定：pri=主色调，comp=辅色调，cont=对比色调，spec=特殊色调
+ * [注]色调命名约定：safe=安全色，succ=成功色，warn=警告色，dang=危险色
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+    全局变量
+========================================================================== */
+$global-ui-namespace: 'mpm-'; // 命名空间前缀
+$global-sketch-width: 750; // 默认设计稿尺寸
+$global-min-width: 320px; // 默认最小宽度
+$global-max-width: 100vw; // 默认最大宽度
+$global-root-font-size: 13.33334vw; // 根html字体尺寸
+$global-font-size: 28px; // 默认字体尺寸
+$global-line-height: 40px; // 默认字体行间距
+//$global-font-family : PingFangSC, 'Helvetica Neue', Helvetica, STHeiTi, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', 'Apple Color Emoji', 'Segoe UI Emoji', 'NotoColorEmoji', 'Segoe UI Symbol', 'Android Emoji', 'EmojiSymbols', sans-serif;
+$global-font-family: sans-serif;
+
+/* ==========================================================================
+    颜色变量
+========================================================================== */
+
+// 主题色调
+$ui-clr-pri: #7468f2; // 风格主色调 primary
+$ui-clr-comp: null; // 风格辅助色调 complementary
+$ui-clr-cont: null; // 风格对比色调 contrast
+$ui-clr-spec: null; // 风格特殊色调 special
+
+// 文字色调
+$ui-clr-text-pri: #333333; // 文字主色调
+$ui-clr-text-comp: #666666; // 文字辅助色调
+$ui-clr-text-cont: #999999; // 文字对比色调
+$ui-clr-text-spec: #ffffff; // 文字特殊色调
+
+// 背景色调
+$ui-clr-bg-pri: #ffffff; // 背景主色调
+$ui-clr-bg-comp: #f8f8f8; // 背景色辅色调
+$ui-clr-bg-cont: null; // 前景对比色调
+$ui-clr-bg-spec: null; // 前景特殊色调
+
+// 边框线色调
+$ui-clr-line-pri: #e0e0e0; // 边框线主色调
+$ui-clr-line-comp: #979797; // 边框线辅助色调
+$ui-clr-line-cont: null; // 边框线对比色调
+$ui-clr-line-spec: null; // 边框线特殊色调
+
+// 安全状态色调
+$ui-clr-safe-pri: null;
+$ui-clr-safe-comp: null;
+$ui-clr-safe-cont: null;
+$ui-clr-safe-spec: null;
+
+// 成功状态色调
+$ui-clr-succ-pri: null;
+$ui-clr-succ-comp: null;
+$ui-clr-succ-cont: null;
+$ui-clr-succ-spec: null;
+
+// 警告状态色调
+$ui-clr-warn-pri: null;
+$ui-clr-warn-comp: null;
+$ui-clr-warn-cont: null;
+$ui-clr-warn-spec: null;
+
+// 危险状态色调
+$ui-clr-dang-pri: #fe3d43;
+$ui-clr-dang-comp: null;
+$ui-clr-dang-cont: null;
+$ui-clr-dang-spec: null;
+
+// 可变状态颜色：active=活动状态，hover=悬浮状态，focus=焦点状态，visited=已访问状态，selected=选中状态，checked=勾选状态，disabled=不可用状态等
+$ui-clr-status-disabled: null;
+
+// 链接颜色 love hate
+$ui-clr-a-link: $ui-clr-text-pri;
+$ui-clr-a-visited: null;
+$ui-clr-a-hover: null;
+$ui-clr-a-active: null;
+
+// 点击反馈背景色 feed-back
+$ui-clr-feedback: rgba(51, 181, 229, 0.4);

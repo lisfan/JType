@@ -1,0 +1,210 @@
+/**
+ * 全局样式
+ * @since 1.0.0
+ * @version 1.0.0
+ *
+ * @markdown
+ *
+ * # 更新日志
+ *
+ * ### 2017/03/114
+ *   - [feature] input,textarea,button上的:focus伪类上移除浏览器默认增加的聚焦外框
+ */
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+
+  /* 提升动画性能 避免闪烁 msl 但是会照成字发虚，模糊，按需针对开启 */
+  //  backface-visibility: hidden
+
+  /* 大于0时，会造成iOS字体模糊，提升Android动画性能 */
+  // perspective: 0;
+  // /*提升动画性能*/
+  // transform: translate3d(1, 1, 1)
+  // /*提升动画性能*/
+  // opacity: 1
+}
+
+/* 更改盒子模型 */
+//*,
+//*:hover,
+//*:focus {
+//  /* ios下滚动流畅 */
+//  -webkit-overflow-scrolling: touch;
+//}
+
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+html {
+  background-color: $ui-clr-bg-comp;
+  font-size: $global-root-font-size;
+  min-height: 100vh;
+  min-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* 保证层高 */
+body {
+  color: $ui-clr-text-pri;
+  background-color: $ui-clr-bg-comp;
+  font-family: $global-font-family;
+  font-size: $global-font-size;
+  line-height: $global-line-height;
+  margin: 0 auto;
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  min-height: 100vh;
+  min-width: 100vw;
+  text-align: justify;
+  user-select: none;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+html,
+body {
+  -webkit-overflow-scrolling: touch; // 弹性滚动
+  -webkit-tap-highlight-color: transparent;
+}
+
+li {
+  list-style-type: none;
+}
+
+// 去掉ios android
+textarea,
+input,
+button {
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 0;
+  resize: none;
+  -webkit-tap-highlight-color: initial;
+}
+
+button {
+  background-color: transparent;
+  line-height: 1;
+}
+
+select {
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  font-size: 100%;
+}
+
+input,
+textarea {
+  background-color: transparent;
+  border: 0;
+  color: $ui-clr-text-comp; // 表单元素的字体颜色不会继承，设置为辅助文字色
+  font-size: 1em;
+  line-height: $global-line-height; // 表单元素的行高不会继承，设置为基础行高
+  resize: none; // 不可调整尺寸
+}
+
+input::-webkit-input-placeholder {
+  color: #b8b8b8;
+}
+
+input::-ms-input-placeholder {
+  color: #b8b8b8;
+}
+
+input::-moz-placeholder {
+  color: #b8b8b8;
+}
+
+input[type='submit'],
+input[type='button'],
+input[type='reset'] {
+  line-height: 1;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+  outline: 0;
+}
+
+// 去掉ios android
+
+a {
+  color: $ui-clr-a-link;
+  // z-index: $ui-g-zindex-map.lg // 将连接的堆叠层级升高，用以避免移动端1px问题模拟产生的无法点击问题
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: initial;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+}
+
+i {
+  font-style: normal;
+}
+
+b {
+  font-weight: normal;
+}
+
+/* img样式初始化 */
+img {
+  backface-visibility: hidden;
+  max-width: 100%;
+  -webkit-touch-callout: none;
+}
+
+/* iframe 样式初始化 */
+iframe {
+  display: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

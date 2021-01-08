@@ -1,0 +1,74 @@
+/**
+ * 主题样式入口
+ * 以及业务使用的全局样式放在这里
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+@import './core/index';
+@import './base/index';
+@import './modules/index';
+
+// 不确定是否有用
+//.mpm-component-toast {
+//  border-radius: 12px;
+//  font-size: 28px;
+//  line-height: 40px;
+//  min-width: 192px;
+//  padding: 16px 24px;
+//}
+//
+//.mpm-app {
+//  .van-pull-refresh {
+//  }
+//
+//  .van-list {
+//    .van-loading,
+//    .van-loading__text,
+//    .van-list__error-text,
+//    .van-list__finished-text,
+//    .van-list__loading {
+//      color: #ffffff;
+//      height: 76px;
+//      line-height: 76px;
+//      //padding-bottom: 6px;
+//      //padding-top: 6px;
+//    }
+//  }
+//
+//  .van-pull-refresh__head,
+//  .van-loading__text,
+//  .van-list__error-text,
+//  .van-list__finished-text,
+//  .van-list__loading {
+//    font-size: 24px;
+//  }
+//}
+//
+//.van-dialog {
+//  width: 520px;
+//  font-size: 32px;
+//  border-radius: 20px;
+//
+//  .van-dialog__header {
+//    padding-top: 20px;
+//    line-height: 48px;
+//  }
+//
+//  .van-dialog__message {
+//    padding-top: 20px;
+//    font-size: 28px;
+//    line-height: 40px;
+//  }
+//
+//  .van-button {
+//    height: 80px;
+//    line-height: 76px;
+//    font-size: 32px;
+//    border-radius: 4px;
+//  }
+//
+//  .van-dialog__confirm,
+//  .van-dialog__confirm:active {
+//    color: #c9392e;
+//  }
+//}

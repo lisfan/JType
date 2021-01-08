@@ -1,0 +1,75 @@
+/**
+ * 一些暂未归类的快捷样式类
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+//@import "../core/variable";
+
+.mpm {
+  &-relative {
+    position: relative;
+  }
+
+  &-absolute {
+    position: absolute;
+  }
+
+  &-sizing-border {
+    box-sizing: border-box;
+  }
+
+  &-inline-block {
+    display: inline-block;
+  }
+
+  &-block {
+    display: block;
+  }
+
+  &-none {
+    display: none;
+  }
+
+  &-visible {
+    visibility: hidden;
+  }
+
+  &-hidden {
+    visibility: hidden;
+  }
+
+  &-fl {
+    float: left;
+  }
+
+  &-fr {
+    float: right;
+  }
+
+  &-clear {
+    _zoom: 1;
+
+    &::after {
+      clear: both;
+      content: '';
+      display: block;
+      font-size: 0;
+      height: 0;
+      line-height: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+  }
+
+  &-smooth {
+    scroll-behavior: smooth;
+  }
+
+  &-x-auto {
+    overflow-x: auto;
+  }
+
+  &-y-auto {
+    overflow-y: auto;
+  }
+}

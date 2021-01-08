@@ -1,0 +1,178 @@
+/**
+ * 颜色模块，对必要的颜色样值，提供单独的类名，用于强制覆盖原样式
+ * [注]各种前缀的颜色
+ * theme - 主题色调
+ * text - 文本颜色
+ * bg - 背景色
+ * bd - 边框色
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+    零碎
+========================================================================== */
+.mpm-clr-bg-white {
+  background-color: #ffffff;
+}
+
+.mpm-clr-bg-white80 {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.mpm-clr-bg-white60 {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.mpm-clr-bg-transparent {
+  background-color: transparent;
+}
+
+.mpm-clr-bg-gray {
+  background-color: #f8f8f8;
+}
+
+/* ==========================================================================
+    主题色
+========================================================================== */
+
+$ui-theme-background-color: namespace('clr'); // 背景色命名
+$ui-theme-text-color: namespace('clr-text'); // 文字色命名
+$ui-theme-border-color: namespace('clr-bd'); // 边框色命名
+
+$ui-clr-map: (
+  'pri': $ui-clr-pri,
+  'comp': $ui-clr-comp,
+  'cont': $ui-clr-cont,
+  'spec': $ui-clr-spec,
+);
+
+$ui-theme-background-color: namespace('clr'); // 背景色命名
+$ui-theme-text-color: namespace('clr-text'); // 文字色命名
+$ui-theme-border-color: namespace('clr-bd'); // 边框色命名
+
+$ui-clr-map: (
+  'pri': $ui-clr-pri,
+  'comp': $ui-clr-comp,
+  'cont': $ui-clr-cont,
+  'spec': $ui-clr-spec,
+);
+
+@each $key, $value in $ui-clr-map {
+  @if ($value) {
+    .#{$ui-theme-background-color + '-' + $key} {
+      background-color: $value;
+    }
+
+    .#{$ui-theme-text-color + '-' + $key} {
+      color: $value;
+    }
+
+    .#{$ui-theme-border-color + '-' + $key} {
+      border-color: $value;
+    }
+  }
+}
+
+/* ==========================================================================
+    状态色
+========================================================================== */
+
+$ui-state-background-color: namespace('clr'); // 背景色命名
+$ui-state-text-color: namespace('clr-text'); // 文字色命名
+$ui-state-border-color: namespace('clr-bd'); // 边框色命名
+
+$ui-state-clr-map: (
+  'safe-pri': $ui-clr-safe-pri,
+  'safe-comp': $ui-clr-safe-comp,
+  'safe-cont': $ui-clr-safe-cont,
+  'safe-spec': $ui-clr-safe-spec,
+  'succ-pri': $ui-clr-succ-pri,
+  'succ-comp': $ui-clr-succ-comp,
+  'succ-cont': $ui-clr-succ-cont,
+  'succ-spec': $ui-clr-succ-spec,
+  'warn-pri': $ui-clr-warn-pri,
+  'warn-comp': $ui-clr-warn-comp,
+  'warn-cont': $ui-clr-warn-cont,
+  'warn-spec': $ui-clr-warn-spec,
+  'dang-pri': $ui-clr-dang-pri,
+  'dang-comp': $ui-clr-dang-comp,
+  'dang-cont': $ui-clr-dang-cont,
+  'dang-spec': $ui-clr-dang-spec,
+);
+
+@each $key, $value in $ui-state-clr-map {
+  @if ($value) {
+    .#{$ui-state-background-color + '-' + $key} {
+      background-color: $value;
+    }
+
+    .#{$ui-state-text-color + '-' + $key} {
+      color: $value;
+    }
+
+    .#{$ui-state-border-color + '-' + $key} {
+      border-color: $value;
+    }
+  }
+}
+
+/* ==========================================================================
+    常规文本色
+========================================================================== */
+$ui-text-color: namespace('tclr'); // 背景色命名
+
+$ui-text-clr-map: (
+  'pri': $ui-clr-text-pri,
+  'comp': $ui-clr-text-comp,
+  'cont': $ui-clr-text-cont,
+  'spec': $ui-clr-text-spec,
+);
+
+@each $key, $value in $ui-text-clr-map {
+  @if ($value) {
+    .#{$ui-text-color + '-' + $key} {
+      color: $value;
+    }
+  }
+}
+
+/* ==========================================================================
+    常规背景色
+========================================================================== */
+$ui-bg-color: namespace('bclr'); // 背景色命名
+
+$ui-bg-clr-map: (
+  'pri': $ui-clr-bg-pri,
+  'comp': $ui-clr-bg-comp,
+  'cont': $ui-clr-bg-cont,
+  'spec': $ui-clr-bg-spec,
+);
+
+@each $key, $value in $ui-bg-clr-map {
+  @if ($value) {
+    .#{$ui-bg-color + '-' + $key} {
+      background-color: $value;
+    }
+  }
+}
+
+/* ==========================================================================
+    常规边框色
+========================================================================== */
+$ui-line-color: namespace('bdclr'); // 背景色命名
+
+$ui-line-clr-map: (
+  'pri': $ui-clr-line-pri,
+  'comp': $ui-clr-line-comp,
+  'cont': $ui-clr-line-cont,
+  'spec': $ui-clr-line-spec,
+);
+
+@each $key, $value in $ui-line-clr-map {
+  @if ($value) {
+    .#{$ui-line-color + '-' + $key} {
+      border-color: $value;
+    }
+  }
+}

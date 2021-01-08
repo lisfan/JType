@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'DIN-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('DIN-Regular.eot');
+  src: url('DIN-Regular.eot?#iefix') format('embedded-opentype'), url('DIN-Regular.ttf') format('truetype'),
+    url('DIN-Regular.woff2') format('woff2'), url('DIN-Regular.woff') format('woff'),
+    url('DIN-Regular.svg#DIN-Regular') format('svg');
+}
+
+.DIN-r {
+  font-family: 'DIN-Regular', sans-serif;
+}

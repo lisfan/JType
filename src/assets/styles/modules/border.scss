@@ -1,0 +1,99 @@
+/**
+ * 边框相关快捷样式类
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+.mpm-bd {
+  border-width: 0.5px;
+  border-style: solid;
+}
+
+.mpm-bd-t {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    right: 0;
+    top: 0;
+    transform: scaleY(0.5);
+    background-color: #e0e0e0;
+  }
+}
+
+// 小程序无法呈现1px像素
+.mpm-bd-b {
+  position: relative;
+  //border-bottom-width: 0.5px;
+  //border-bottom-style: solid;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: scaleY(0.5);
+    background-color: #e0e0e0;
+  }
+}
+
+.mpm-bd-l {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: scaleX(0.5);
+    background-color: #e0e0e0;
+  }
+}
+
+.mpm-bd-r {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transform: scaleX(0.5);
+    background-color: #e0e0e0;
+  }
+}
+
+/* ==========================================================================
+    圆角弧度相关
+========================================================================== */
+
+$ui-border-radius: namespace('bdr');
+
+$ui-bdr-map: (
+  '0': 0,
+  '4': 4px,
+  '8': 8px,
+  '10': 10px,
+  '20': 20px,
+  '30': 30px,
+);
+
+@each $key, $value in $ui-bdr-map {
+  .#{$ui-border-radius + $key} {
+    overflow: hidden;
+    border-radius: $value;
+  }
+}

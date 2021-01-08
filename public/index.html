@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <!--    pad端不需要指定device-width，但需要设置user-scalebale=no！ -->
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <meta http-equiv="cache-control" content="max-age=0"/>
+  <meta http-equiv="cache-control" content="no-cache"/>
+  <meta http-equiv="pragma" content="no-cache"/>
+
+  <meta name="build-date" content="<%= htmlWebpackPlugin.options.BUILD_DATE %>"/>
+  <meta name="build-author" content="<%= htmlWebpackPlugin.options.BUILD_AUTHOR %>"/>
+  <meta name="server-env" content="<%= htmlWebpackPlugin.options.SERVER_ENV %>"/>
+  <meta name="git-branch" content="<%= htmlWebpackPlugin.options.GIT_BRANCH %>"/>
+  <meta name="git-commit" content="<%= htmlWebpackPlugin.options.GIT_COMMIT %>"/>
+  <meta name="git-date" content="<%= htmlWebpackPlugin.options.GIT_DATE %>"/>
+  <meta name="app-version" content="<%= htmlWebpackPlugin.options.APP_VERSION %>"/>
+  <meta name="sdk-version" content="<%= htmlWebpackPlugin.options.SDK_VERSION %>"/>
+
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="format-detection" content="address=no"/>
+
+  <link rel="icon" href="<%= BASE_URL %>favicon.png"/>
+  <title><%= htmlWebpackPlugin.options.TITLE %></title>
+</head>
+<body>
+<noscript>
+  <strong>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.TITLE %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+
+</body>
+</html>

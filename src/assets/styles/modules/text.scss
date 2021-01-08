@@ -1,0 +1,106 @@
+/**
+ * 文本相关快捷样式类
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+/* ==========================================================================
+    文字大小相关
+========================================================================== */
+
+$ui-font: namespace('f');
+
+$ui-fs-map: (
+  '0': 0,
+  '20': 20px,
+  '24': 24px,
+  '26': 26px,
+  '28': 28px,
+  '30': 30px,
+  '32': 32px,
+  '34': 34px,
+  '36': 36px,
+  '38': 38px,
+  '40': 40px,
+  '54': 54px,
+);
+
+@each $key, $value in $ui-fs-map {
+  .#{$ui-font + $key} {
+    font-size: $value;
+  }
+}
+
+/* ==========================================================================
+    文字行高相关
+========================================================================== */
+
+$ui-line-height: namespace('lh');
+
+$ui-lh-map: (
+  '0': 0,
+  '1': 1,
+  '40': 40px,
+  '54': 54px,
+);
+
+@each $key, $value in $ui-lh-map {
+  .#{$ui-line-height + $key} {
+    line-height: $value;
+  }
+}
+
+/* ==========================================================================
+    其他相关
+========================================================================== */
+
+.mpm-weight-bold {
+  font-weight: bold;
+}
+
+.mpm-weight-normal {
+  font-weight: normal;
+}
+
+.mpm-align-justify {
+  text-align: justify;
+}
+
+.mpm-align-left {
+  text-align: left;
+}
+
+.mpm-align-center {
+  text-align: center;
+}
+
+.mpm-align-right {
+  text-align: right;
+}
+
+.mpm-nowrap {
+  white-space: nowrap;
+}
+
+.mpm-pre-wrap {
+  white-space: pre-wrap;
+}
+
+/* 单行文字溢出时出现省略号 */
+.mpm-text-overflow-1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+/* 2行文本场景比较多，所以特别抽出 */
+.mpm-text-overflow-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+}

@@ -1,0 +1,11 @@
+// 覆盖nprogress默认样式
+
+#nprogress {
+  position: relative;
+  z-index: 20000;
+}
+
+#nprogress .bar {
+  background: #4fc08d;
+  height: 4px;
+}

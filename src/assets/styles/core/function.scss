@@ -1,0 +1,16 @@
+/**
+ * 混入定义
+ * 加上
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+
+// 增减数值
+@function increase($target, $num) {
+  @return $target + $num;
+}
+
+// 为样式模块加上命名空间
+@function namespace($str) {
+  @return $global-ui-namespace + $str;
+}

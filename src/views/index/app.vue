@@ -1,0 +1,378 @@
+<template>
+  <div class="jp-type flex center" @click="setInputFocus">
+    <div class="jp-type--ctr">
+      <div class="jp-type--hint mpm-mauto" v-if="list[current]">
+        <div class="jp-type--preview flex center">
+          <div class="jp-type--preview-text">
+            {{ list[current].mainJP }}
+          </div>
+          <div class="jp-type--annotation">
+            <div class="jp-type--annotation-row flex justify-between">
+              <span>罗马音：{{ list[current].luoma }}</span>
+              <span>{{ `起源：${list[current].mainCN}` }}</span>
+            </div>
+            <div class="jp-type--annotation-row flex justify-between">
+              <span>联想：{{ list[current].think }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="jp-type--preview-other flex center">
+          <div class="jp-type--preview-text-other">
+            {{ list[current].subJP }}
+          </div>
+          <div class="jp-type--annotation">
+            <div class="jp-type--annotation-row flex justify-end">
+              <div>{{ `起源：${list[current].subCN}` }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="jp-type--show">
+        <span class="jp-type--show-text" v-for="(item,index) in list"
+              :key="index">{{ item.mainJP }}</span>
+      </div>
+      <div class="jp-type--show mpm-mt12 ">
+        <span class="jp-type--show-text jp-type--input-text" v-for="(item,index) in inputList" :key="index" :class="{
+          wrong: item !== list[index].mainJP
+        }">{{ item }}</span><input ref="input" class="jp-type--input"
+                                   :class="{'wrong':currentWrong}"
+                                   v-model.trim="input"
+                                   :maxlength="inputList.length === list.length ? 0 : 1"
+                                   @input="onCheck"
+                                   @keydown.delete="onDelete"
+                                   @keydown.enter="onFinish"
+                                   @keyup="onInsert"
+                                   @keyup.delete="onReset"
+      >
+      </div>
+      <div class="jp-type--reset" @click="change()">重新练习</div>
+    </div>
+    <div class="jp-type--lesson">
+      <div class="jp-type--lesson-head">课程章节</div>
+      <div class="jp-type--lesson-head">五十音<br />平假名</div>
+      <div class="jp-type--lesson-list">
+        <div class="jp-type--lesson-section" v-for="(item,key,index) in PINGJIA_LETTERS_MAP" :key="key+item[0].mainJP"
+             :class="{'active':currentLabel.indexOf(key) !== -1}"
+             @click="change(key)">{{ item[0].mainJP }}行
+        </div>
+      </div>
+      <div class="jp-type--lesson-head">五十音<br />片假名</div>
+      <div class="jp-type--lesson-list">
+        <div class="jp-type--lesson-section" v-for="(item,key,index) in PIANJIA_LETTERS_MAP" :key="key+item[0].mainJP"
+             :class="{'active':currentLabel.indexOf(key) !== -1}"
+             @click="change(key)">{{ item[0].mainJP }}行
+        </div>
+      </div>
+
+    </div>
+    <div class="jp-type--edition-info">
+      <div>v{{ process.BUILD.APP_VERSION }}</div>
+      <div>{{ process.BUILD.BUILD_DATE}}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import PINGJIA_LETTERS_MAP from '../pianjia-letters'
+import PIANJIA_LETTERS_MAP from '../pingjia-letters'
+
+export default {
+  data() {
+    return {
+      LETTERS_MAP: {
+        ...PINGJIA_LETTERS_MAP,
+        ...PIANJIA_LETTERS_MAP,
+      },
+      PINGJIA_LETTERS_MAP,
+      PIANJIA_LETTERS_MAP,
+      list: [],
+      inputList: [],
+      input: '', // 已输入值
+      lastInput: '', // 上一个输入的键
+      current: 0,
+      currentWrong: false,
+      currentLabel: [],
+      sliceLength: 30,
+    }
+  },
+  methods: {
+    change(label) {
+      // 清空已输入内容
+      this.inputList = []
+      this.input = ''
+      this.lastInput = ''
+      this.current = 0
+      this.currentWrong = false
+
+      // label
+      // 增加一个新的label
+      // 取消时若为最后一项则不允许取消
+
+      const currentLabelIndex = this.currentLabel.indexOf(label)
+
+      if (label && currentLabelIndex === -1) {
+        this.currentLabel.push(label)
+      } else if (label && currentLabelIndex >= 0 && this.currentLabel.length > 1) {
+        this.currentLabel.splice(currentLabelIndex, 1)
+      }
+
+      console.log('this.currentLabel', this.currentLabel)
+
+      const LETTER_LIST = this.currentLabel.reduce((list, labelItem) => {
+        list = list.concat(this.LETTERS_MAP[labelItem])
+        return list
+      }, [])
+
+      const list = []
+
+      for (let i = 0; i < this.sliceLength; i++) {
+        const index = Math.floor(Math.random() * 100 % LETTER_LIST.length)
+
+        list.push(LETTER_LIST[index])
+      }
+
+      console.log('list', list)
+      this.list = list
+
+      // this.setInputFocus()
+    },
+    // 按了回车键的时候判断值是否正确
+    onCheck(e) {
+      // 不存在值的时候，关闭错误提示
+      // 按了回车之后再检查（补充）
+      this.lastInput = e.data
+    },
+    onInsert(e) {
+      if (e.key === 'Backspace') return
+      if (!this.input) return
+
+      this.inputList.push(this.input)
+      if (this.current + 1 < this.sliceLength) this.current++
+
+      this.input = ''
+      this.lastInput = ''
+      this.currentWrong = false
+    },
+
+    onDelete() {
+      if (this.current <= 0) return
+      if (this.lastInput || this.input) return
+
+      this.inputList.pop()
+      this.current--
+
+      this.input = ''
+      this.lastInput = ''
+      this.currentWrong = false
+    },
+    onFinish() {
+      if (this.list.length === this.inputList.length) this.change()
+    },
+    onReset() {
+      if (!this.input) {
+        this.currentWrong = false
+      }
+    },
+    setInputFocus() {
+      setImmediate(() => {
+        this.$refs.input.focus()
+      })
+    },
+  },
+  mounted() {
+    this.change('X_PIANJIA_LETTERS')
+  },
+}
+</script>
+
+<style lang="scss">
+.jp-type {
+  padding: 80PX 40PX;
+  min-height: 100vh;
+  background-color: #4a4648;
+  color: white;
+}
+
+.jp-type--ctr {
+  min-width: 820PX;
+  max-width: 820PX;
+}
+
+.jp-type--hint {
+  position: relative;
+  width: 180PX;
+  margin: 0 auto;
+  transform: translateX(-30PX);
+  margin-bottom: 94PX;
+}
+
+.jp-type--preview, .jp-type--preview-other {
+  position: relative;
+  width: 100%;
+  height: 180PX;
+  border-radius: 10PX;
+  border: 3PX solid white;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1PX dashed #777174;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+    border: 1PX dashed #777174;
+  }
+}
+
+.jp-type--preview-text, .jp-type--preview-text-other {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-size: 130PX;
+}
+
+
+.jp-type--preview-other {
+  position: absolute;
+  right: -130PX;
+  bottom: 0;
+  width: 100PX;
+  height: 100PX;
+}
+
+.jp-type--preview-text-other {
+  z-index: 2;
+  font-size: 60PX;
+}
+
+.jp-type--annotation {
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  padding: 0 4PX;
+  width: 100%;
+  font-size: 14PX;
+  line-height: 1.3;
+  color: #ccc;
+}
+
+.jp-type--annotation-row {
+  margin-top: 14PX;
+  line-height: 1.3;
+}
+
+.jp-type--input {
+  border-bottom: 1PX solid #dddddd;
+  width: 40PX;
+  height: 40PX;
+  line-height: 40PX;
+  text-align: center;
+  color: white;
+  font-size: 30PX;
+}
+
+.jp-type--show {
+  min-height: 90PX;
+
+  line-height: 0;
+  font-size: 0;
+}
+
+.jp-type--show-text {
+  width: 40PX;
+  height: 40PX;
+  line-height: 40PX;
+  display: inline-block;
+  text-align: center;
+  font-size: 30PX;
+
+  &.wrong {
+    color: red;
+  }
+}
+
+.jp-type--input-text {
+  color: #5c7fdb;
+}
+
+.jp-type--lesson {
+  position: fixed;
+  right: -12PX;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 12PX;
+  line-height: 1.3;
+}
+
+.jp-type--lesson-head {
+  padding: 4PX 14PX 4PX 4PX;
+  background-color: #504d51;
+}
+
+
+.jp-type--lesson-section {
+  padding: 4PX 14PX 4PX 4PX;
+  transition: all 0.3s ease;
+  background-color: #3e3c3f;
+  cursor: pointer;
+
+  &.active {
+    background-color: #6e6c7a;
+    transform: translateX(-6PX) scale(1.1);
+    box-shadow: -2PX 2PX 2PX rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    background-color: #6e6c7a;
+  }
+}
+
+.jp-type--reset {
+  box-shadow: 1PX 5PX 10PX rgba(0, 0, 0, 0.1);
+
+  background-color: #6e6c7a;
+  width: 180PX;
+  font-size: 18PX;
+  height: 46PX;
+  line-height: 46PX;
+  margin: 0 auto;
+  margin-top: 100PX;
+  text-align: center;
+  border-radius: 6PX;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.04) translateY(-4PX);
+    background-color: #5a5964;
+    box-shadow: 1PX 5PX 16PX rgba(0, 0, 0, 0.3);
+  }
+
+  &:active{
+    transform: scale(1) translateY(4PX);
+  }
+}
+
+.jp-type--edition-info {
+  position: absolute;
+  text-align:right;
+  bottom: 10PX;
+  right: 10PX;
+  font-size: 12PX;
+  color: #777;
+  line-height:1.3;
+}
+</style>
