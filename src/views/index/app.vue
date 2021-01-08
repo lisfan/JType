@@ -5,28 +5,28 @@
         <div><span>耗时：</span><span class="jp-type--stats-text">{{ timeTotalText }}</span></div>
         <div><span>速度：</span><span class="jp-type--stats-text">{{ timeSpeed }}个/分钟</span></div>
       </div>
-      <div class="jp-type--hint mpm-mauto" v-if="list[current]">
+      <div class="jp-type--hint mpm-mauto" v-if="currentLetter">
         <div class="jp-type--preview flex center">
           <div class="jp-type--preview-text">
-            {{ list[current].mainJP }}
+            {{ currentLetter.mainJP }}
           </div>
           <div class="jp-type--annotation">
             <div class="jp-type--annotation-row flex justify-between">
-              <span>罗马字：{{ list[current].luoma }}</span>
-              <span>汉字：{{ list[current].mainCN }}</span>
+              <span>罗马字：{{ currentLetter.luoma }}</span>
+              <span>汉字：{{ currentLetter.mainCN }}</span>
             </div>
             <div class="jp-type--annotation-row flex justify-between">
-              <span>联想：{{ list[current].think }}</span>
+              <span>联想：{{ currentLetter.think }}</span>
             </div>
           </div>
         </div>
         <div class="jp-type--preview-other flex center">
           <div class="jp-type--preview-text-other">
-            {{ list[current].subJP }}
+            {{ currentLetter.subJP }}
           </div>
           <div class="jp-type--annotation">
             <div class="jp-type--annotation-row flex justify-end">
-              <div>汉字：{{ list[current].subCN }}</div>
+              <div>汉字：{{ currentLetter.subCN }}</div>
             </div>
           </div>
         </div>
@@ -104,6 +104,13 @@ export default {
     }
   },
   computed: {
+    currentLetter() {
+      if (this.current === this.sliceLength) {
+        return this.list[this.sliceLength - 1]
+      } else {
+        return this.list[this.current]
+      }
+    },
     timeTotalText() {
       if (this.timeTotal <= 59 * 1000) {
         return dayjs(this.timeTotal).format('s秒')
@@ -163,10 +170,12 @@ export default {
         }, 1000)
       }
 
-      console.log('e', e)
+      console.log('e1', e)
       // 不存在值的时候，关闭错误提示
       // 按了回车之后再检查（补充）
-      if (e.data) this.lastInput = e.data.slice(-1)
+      if (['insertCompositionText', 'insertText'].indexOf(e.inputType) >= 0) {
+        this.lastInput = e.data ? e.data.slice(-1) : ''
+      }
     },
     onInsert(e) {
       if (e.key === 'Backspace') return
@@ -183,7 +192,7 @@ export default {
       this.inputList = this.inputList.concat(needInsertInput)
 
       if ((this.current + needInsertInput.length) >= this.sliceLength) {
-        this.current = this.sliceLength - 1
+        this.current = this.sliceLength
       } else {
         this.current += needInsertInput.length
       }
