@@ -13,7 +13,7 @@
           <div class="jp-type--annotation">
             <div class="jp-type--annotation-row flex justify-between">
               <span>罗马字：{{ list[current].luoma }}</span>
-              <span>{{ `起源：${list[current].mainCN}` }}</span>
+              <span>汉字：{{ list[current].mainCN }}</span>
             </div>
             <div class="jp-type--annotation-row flex justify-between">
               <span>联想：{{ list[current].think }}</span>
@@ -26,7 +26,7 @@
           </div>
           <div class="jp-type--annotation">
             <div class="jp-type--annotation-row flex justify-end">
-              <div>{{ `起源：${list[current].subCN}` }}</div>
+              <div>汉字：{{ list[current].subCN }}</div>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
         }">{{ item }}</span><input ref="input" class="jp-type--input"
                                    :class="{'wrong':currentWrong}"
                                    v-model.trim="input"
-                                   :maxlength="inputList.length === list.length ? 0 : 1"
+                                   :maxlength="inputList.length === list.length ? 0 : 10"
                                    @input="onCheck"
                                    @keydown.delete="onDelete"
                                    @keydown.enter="onFinish"
@@ -163,16 +163,30 @@ export default {
         }, 1000)
       }
 
+      console.log('e', e)
       // 不存在值的时候，关闭错误提示
       // 按了回车之后再检查（补充）
-      this.lastInput = e.data
+      if (e.data) this.lastInput = e.data.slice(-1)
     },
     onInsert(e) {
       if (e.key === 'Backspace') return
       if (!this.input) return
 
-      this.inputList.push(this.input)
-      if (this.current + 1 < this.sliceLength) this.current++
+      // 如果加上去的数量超过总数量时，则进行截断
+
+      const exceedCount = (this.current + this.input.length) - this.sliceLength
+
+      const needInsertInput = exceedCount > 0
+        ? this.input.split('').slice(0, -exceedCount)
+        : this.input.split('')
+
+      this.inputList = this.inputList.concat(needInsertInput)
+
+      if ((this.current + needInsertInput.length) >= this.sliceLength) {
+        this.current = this.sliceLength - 1
+      } else {
+        this.current += needInsertInput.length
+      }
 
       this.reset()
     },
