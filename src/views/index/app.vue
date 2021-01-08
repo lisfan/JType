@@ -41,14 +41,17 @@
         }">{{ item }}</span><input ref="input" class="jp-type--input"
                                    :class="{'wrong':currentWrong}"
                                    v-model.trim="input"
-                                   :maxlength="inputList.length === list.length ? 0 : 10"
+                                   :maxlength="isFinished ? 0 : 10"
                                    @input="onCheck"
                                    @keydown.delete="onDelete"
                                    @keydown.enter="onFinish"
                                    @keyup="onInsert"
       >
       </div>
-      <div class="jp-type--reset" @click="change()">重新练习</div>
+      <div class="mpm-relative">
+        <div class="jp-type--reset" @click="change()">重新练习</div>
+        <div class="jp-type--reset-notice" v-if="isFinished">本次课程已完成</div>
+      </div>
     </div>
     <div class="jp-type--lesson">
       <div class="jp-type--lesson-head">课程章节</div>
@@ -116,6 +119,18 @@ export default {
         return dayjs(this.timeTotal).format('s秒')
       } else {
         return dayjs(this.timeTotal).format('m分s秒')
+      }
+    },
+    // 练习是否完成，若练习完成，则不可再删除或者输入，只能进行重新练习，且停止计时统计等
+    isFinished() {
+      return this.inputList.length === this.list.length
+    },
+  },
+  watch: {
+    isFinished() {
+      if (this.isFinished) {
+        clearInterval(this.timer)
+        this.timer = null
       }
     },
   },
@@ -207,6 +222,7 @@ export default {
     },
 
     onDelete() {
+      if (this.isFinished) return
       if (this.current <= 0) return
       if (this.lastInput || this.input) return
 
@@ -216,7 +232,7 @@ export default {
       this.reset()
     },
     onFinish() {
-      if (this.list.length === this.inputList.length) this.change()
+      if (this.isFinished) this.change()
     },
     reset() {
       this.input = ''
@@ -334,7 +350,7 @@ export default {
   width: 100%;
   font-size: 14PX;
   line-height: 1.3;
-  color: #ccc;
+  color: #ddd;
 }
 
 .jp-type--annotation-row {
@@ -366,10 +382,10 @@ export default {
   display: inline-block;
   text-align: center;
   font-size: 30PX;
-  text-shadow: 2PX 2PX 4PX rgba(0, 0, 0, 0.3);
+  text-shadow: 2PX 2PX 4PX rgba(0, 0, 0, 0.2);
 
   &.wrong {
-    color: red;
+    color: #ff8c8c;
   }
 }
 
@@ -419,11 +435,11 @@ export default {
   height: 46PX;
   line-height: 46PX;
   margin: 0 auto;
-  margin-top: 100PX;
+  margin-top: 60PX;
   text-align: center;
   border-radius: 6PX;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 
   &:hover {
     transform: scale(1.04) translateY(-4PX);
@@ -434,6 +450,16 @@ export default {
   &:active {
     transform: scale(1) translateY(4PX);
   }
+}
+
+.jp-type--reset-notice {
+  position: absolute;
+  bottom: -24PX;
+  font-size: 12PX;
+  left: 50%;
+  color: #888;
+  transform: translateX(-50%);
+  line-height: 1;
 }
 
 .jp-type--edition-info {
