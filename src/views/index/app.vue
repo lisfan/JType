@@ -104,6 +104,7 @@ export default {
       timer: null, // 计时器
       timeTotal: 0, // 总耗时
       timeSpeed: 0, // 打字速度统计
+      defaultLabel: JSON.parse(localStorage.getItem('currentLabel')) || 'X_PINGJIA_LETTERS',
     }
   },
   computed: {
@@ -147,23 +148,24 @@ export default {
       this.lastInput = ''
       this.currentWrong = false
 
-      // label
-      // 增加一个新的label
+      // 如果label为空，则不处理currentLabel的值
       // 取消时若为最后一项则不允许取消
-      const labelList = typeof label === 'string' ? [label] : label
+      if (label) {
+        const labelList = typeof label === 'string' ? [label] : label
 
-      labelList.forEach((labelItem) => {
-        const currentLabelIndex = this.currentLabel.indexOf(labelItem)
+        labelList.forEach((labelItem) => {
+          const currentLabelIndex = this.currentLabel.indexOf(labelItem)
 
-        if (currentLabelIndex === -1) {
-          this.currentLabel.push(labelItem)
-        } else if (currentLabelIndex >= 0 && this.currentLabel.length > 1) {
-          this.currentLabel.splice(currentLabelIndex, 1)
-        }
-      })
+          if (currentLabelIndex === -1) {
+            this.currentLabel.push(labelItem)
+          } else if (currentLabelIndex >= 0 && this.currentLabel.length > 1) {
+            this.currentLabel.splice(currentLabelIndex, 1)
+          }
+        })
 
-      // 将当前选中的字符存放到ls中，缓存
-      localStorage.setItem('currentLabel', JSON.stringify(this.currentLabel))
+        // 将当前选中的字符存放到ls中，缓存
+        localStorage.setItem('currentLabel', JSON.stringify(this.currentLabel))
+      }
 
       const LETTER_LIST = this.currentLabel.reduce((list, labelItem) => {
         list = list.concat(this.LETTERS_MAP[labelItem])
@@ -247,9 +249,7 @@ export default {
   },
   mounted() {
     // 默认的为平假名元音行
-    const defaultLabel = JSON.parse(localStorage.getItem('currentLabel')) || 'X_PINGJIA_LETTERS'
-
-    this.change(defaultLabel)
+    this.change(this.defaultLabel)
   },
 }
 </script>
