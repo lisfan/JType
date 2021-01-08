@@ -1,6 +1,10 @@
 <template>
   <div class="jp-type flex center" @click="setInputFocus">
     <div class="jp-type--ctr">
+      <div class="jp-type--stats flex column items-end">
+        <div><span>耗时：</span><span class="jp-type--stats-text">{{ timeTotalText }}</span></div>
+        <div><span>速度：</span><span class="jp-type--stats-text">{{ timeSpeed }}个/分钟</span></div>
+      </div>
       <div class="jp-type--hint mpm-mauto" v-if="list[current]">
         <div class="jp-type--preview flex center">
           <div class="jp-type--preview-text">
@@ -42,7 +46,6 @@
                                    @keydown.delete="onDelete"
                                    @keydown.enter="onFinish"
                                    @keyup="onInsert"
-                                   @keyup.delete="onReset"
       >
       </div>
       <div class="jp-type--reset" @click="change()">重新练习</div>
@@ -69,7 +72,7 @@
     </div>
     <div class="jp-type--edition-info">
       <div>v{{ process.BUILD.APP_VERSION }}</div>
-      <div>{{ process.BUILD.BUILD_DATE}}</div>
+      <div>{{ process.BUILD.BUILD_DATE }}</div>
     </div>
   </div>
 </template>
@@ -95,21 +98,36 @@ export default {
       currentWrong: false,
       currentLabel: [],
       sliceLength: 30,
+      timer: null, // 计时器
+      timeTotal: 0, // 总耗时
+      timeSpeed: 0, // 打字速度统计
     }
+  },
+  computed: {
+    timeTotalText() {
+      if (this.timeTotal <= 59 * 1000) {
+        return dayjs(this.timeTotal).format('s秒')
+      } else {
+        return dayjs(this.timeTotal).format('m分s秒')
+      }
+    },
   },
   methods: {
     change(label) {
       // 清空已输入内容
+      clearInterval(this.timer)
+      this.timer = null
+      this.timeTotal = 0 // 总耗时
+      this.timeSpeed = 0 // 打字速度统计
       this.inputList = []
+      this.current = 0
       this.input = ''
       this.lastInput = ''
-      this.current = 0
       this.currentWrong = false
 
       // label
       // 增加一个新的label
       // 取消时若为最后一项则不允许取消
-
       const currentLabelIndex = this.currentLabel.indexOf(label)
 
       if (label && currentLabelIndex === -1) {
@@ -117,8 +135,6 @@ export default {
       } else if (label && currentLabelIndex >= 0 && this.currentLabel.length > 1) {
         this.currentLabel.splice(currentLabelIndex, 1)
       }
-
-      console.log('this.currentLabel', this.currentLabel)
 
       const LETTER_LIST = this.currentLabel.reduce((list, labelItem) => {
         list = list.concat(this.LETTERS_MAP[labelItem])
@@ -133,13 +149,20 @@ export default {
         list.push(LETTER_LIST[index])
       }
 
-      console.log('list', list)
       this.list = list
 
-      // this.setInputFocus()
+      this.setInputFocus()
     },
     // 按了回车键的时候判断值是否正确
     onCheck(e) {
+      // 开始计时
+      if (!this.timer) {
+        this.timer = setInterval(() => {
+          this.timeTotal += 1000
+          this.timeSpeed = Math.floor(this.inputList.length / (this.timeTotal / 1000) * 60)
+        }, 1000)
+      }
+
       // 不存在值的时候，关闭错误提示
       // 按了回车之后再检查（补充）
       this.lastInput = e.data
@@ -151,9 +174,7 @@ export default {
       this.inputList.push(this.input)
       if (this.current + 1 < this.sliceLength) this.current++
 
-      this.input = ''
-      this.lastInput = ''
-      this.currentWrong = false
+      this.reset()
     },
 
     onDelete() {
@@ -163,17 +184,15 @@ export default {
       this.inputList.pop()
       this.current--
 
-      this.input = ''
-      this.lastInput = ''
-      this.currentWrong = false
+      this.reset()
     },
     onFinish() {
       if (this.list.length === this.inputList.length) this.change()
     },
-    onReset() {
-      if (!this.input) {
-        this.currentWrong = false
-      }
+    reset() {
+      this.input = ''
+      this.lastInput = ''
+      this.currentWrong = false
     },
     setInputFocus() {
       setImmediate(() => {
@@ -196,6 +215,7 @@ export default {
 }
 
 .jp-type--ctr {
+  position: relative;
   min-width: 820PX;
   max-width: 820PX;
 }
@@ -258,6 +278,21 @@ export default {
   z-index: 2;
   font-size: 60PX;
 }
+
+.jp-type--stats {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #ddd;
+  font-size: 12PX;
+  line-height: 1.4;
+}
+
+.jp-type--stats-text {
+  display: inline-block;
+  width: 70PX;
+}
+
 
 .jp-type--annotation {
   position: absolute;
@@ -363,18 +398,18 @@ export default {
     box-shadow: 1PX 5PX 16PX rgba(0, 0, 0, 0.3);
   }
 
-  &:active{
+  &:active {
     transform: scale(1) translateY(4PX);
   }
 }
 
 .jp-type--edition-info {
   position: absolute;
-  text-align:right;
+  text-align: right;
   bottom: 10PX;
   right: 10PX;
   font-size: 12PX;
   color: #777;
-  line-height:1.3;
+  line-height: 1.3;
 }
 </style>
