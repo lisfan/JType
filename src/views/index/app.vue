@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import PINGJIA_LETTERS_MAP from '../pianjia-letters'
-import PIANJIA_LETTERS_MAP from '../pingjia-letters'
+import PINGJIA_LETTERS_MAP from '../pingjia-letters'
+import PIANJIA_LETTERS_MAP from '../pianjia-letters'
 
 export default {
   data() {
