@@ -16,15 +16,15 @@ export default {
   ],
   S_PINGJIA_LETTERS: [
     { luoma: 'sa', mainJP: 'さ', subJP: 'サ', mainCN: '左', subCN: '散', think: '待补充' },
-    { luoma: 'shi', mainJP: 'し', subJP: 'シ', mainCN: '之', subCN: '之', think: '待补充' },
+    { luoma: 'si(shi)', mainJP: 'し', subJP: 'シ', mainCN: '之', subCN: '之', think: '待补充' },
     { luoma: 'su', mainJP: 'す', subJP: 'ス', mainCN: '寸', subCN: '須', think: '待补充' },
     { luoma: 'se', mainJP: 'せ', subJP: 'セ', mainCN: '世', subCN: '世', think: '待补充' },
     { luoma: 'so', mainJP: 'そ', subJP: 'ソ', mainCN: '曾', subCN: '曾', think: '待补充' },
   ],
   T_PINGJIA_LETTERS: [
     { luoma: 'ta', mainJP: 'た', subJP: 'タ', mainCN: '太', subCN: '多', think: '待补充' },
-    { luoma: 'chi', mainJP: 'ち', subJP: 'チ', mainCN: '知', subCN: '千', think: '待补充' },
-    { luoma: 'tsu', mainJP: 'つ', subJP: 'ツ', mainCN: '川', subCN: '川', think: '待补充' },
+    { luoma: 'ti(chi)', mainJP: 'ち', subJP: 'チ', mainCN: '知', subCN: '千', think: '待补充' },
+    { luoma: 'tu(tsu)', mainJP: 'つ', subJP: 'ツ', mainCN: '川', subCN: '川', think: '待补充' },
     { luoma: 'te', mainJP: 'て', subJP: 'テ', mainCN: '天', subCN: '天', think: '待补充' },
     { luoma: 'to', mainJP: 'と', subJP: 'ト', mainCN: '止', subCN: '止', think: '待补充' },
   ],

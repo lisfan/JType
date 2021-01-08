@@ -8,7 +8,7 @@
           </div>
           <div class="jp-type--annotation">
             <div class="jp-type--annotation-row flex justify-between">
-              <span>罗马音：{{ list[current].luoma }}</span>
+              <span>罗马字：{{ list[current].luoma }}</span>
               <span>{{ `起源：${list[current].mainCN}` }}</span>
             </div>
             <div class="jp-type--annotation-row flex justify-between">
@@ -50,6 +50,7 @@
     <div class="jp-type--lesson">
       <div class="jp-type--lesson-head">课程章节</div>
       <div class="jp-type--lesson-head">五十音<br />平假名</div>
+      <div class="jp-type--lesson-head">清音</div>
       <div class="jp-type--lesson-list">
         <div class="jp-type--lesson-section" v-for="(item,key,index) in PINGJIA_LETTERS_MAP" :key="key+item[0].mainJP"
              :class="{'active':currentLabel.indexOf(key) !== -1}"
@@ -57,6 +58,7 @@
         </div>
       </div>
       <div class="jp-type--lesson-head">五十音<br />片假名</div>
+      <div class="jp-type--lesson-head">清音</div>
       <div class="jp-type--lesson-list">
         <div class="jp-type--lesson-section" v-for="(item,key,index) in PIANJIA_LETTERS_MAP" :key="key+item[0].mainJP"
              :class="{'active':currentLabel.indexOf(key) !== -1}"
