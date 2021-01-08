@@ -215,7 +215,7 @@ export default {
     },
   },
   mounted() {
-    this.change('X_PIANJIA_LETTERS')
+    this.change('X_PINGJIA_LETTERS')
   },
 }
 </script>
