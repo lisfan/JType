@@ -135,13 +135,20 @@ export default {
       // label
       // 增加一个新的label
       // 取消时若为最后一项则不允许取消
-      const currentLabelIndex = this.currentLabel.indexOf(label)
+      const labelList = typeof label === 'string' ? [label] : label
 
-      if (label && currentLabelIndex === -1) {
-        this.currentLabel.push(label)
-      } else if (label && currentLabelIndex >= 0 && this.currentLabel.length > 1) {
-        this.currentLabel.splice(currentLabelIndex, 1)
-      }
+      labelList.forEach((labelItem) => {
+        const currentLabelIndex = this.currentLabel.indexOf(labelItem)
+
+        if (currentLabelIndex === -1) {
+          this.currentLabel.push(labelItem)
+        } else if (currentLabelIndex >= 0 && this.currentLabel.length > 1) {
+          this.currentLabel.splice(currentLabelIndex, 1)
+        }
+      })
+
+      // 将当前选中的字符存放到ls中，缓存
+      localStorage.setItem('currentLabel', JSON.stringify(this.currentLabel))
 
       const LETTER_LIST = this.currentLabel.reduce((list, labelItem) => {
         list = list.concat(this.LETTERS_MAP[labelItem])
@@ -170,7 +177,6 @@ export default {
         }, 1000)
       }
 
-      console.log('e1', e)
       // 不存在值的时候，关闭错误提示
       // 按了回车之后再检查（补充）
       if (['insertCompositionText', 'insertText'].indexOf(e.inputType) >= 0) {
@@ -224,7 +230,10 @@ export default {
     },
   },
   mounted() {
-    this.change('X_PINGJIA_LETTERS')
+    // 默认的为平假名元音行
+    const defaultLabel = JSON.parse(localStorage.getItem('currentLabel')) || 'X_PINGJIA_LETTERS'
+
+    this.change(defaultLabel)
   },
 }
 </script>
@@ -239,8 +248,8 @@ export default {
 
 .jp-type--ctr {
   position: relative;
-  min-width: 820PX;
-  max-width: 820PX;
+  min-width: 680PX;
+  max-width: 680PX;
 }
 
 .jp-type--hint {
@@ -248,7 +257,7 @@ export default {
   width: 180PX;
   margin: 0 auto;
   transform: translateX(-30PX);
-  margin-bottom: 94PX;
+  margin-bottom: 110PX;
 }
 
 .jp-type--preview, .jp-type--preview-other {
@@ -357,6 +366,7 @@ export default {
   display: inline-block;
   text-align: center;
   font-size: 30PX;
+  text-shadow: 2PX 2PX 4PX rgba(0, 0, 0, 0.3);
 
   &.wrong {
     color: red;
