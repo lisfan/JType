@@ -50,7 +50,7 @@
       </div>
       <div class="mpm-relative">
         <div class="jp-type--reset" @click="change()">重新练习</div>
-        <div class="jp-type--reset-notice" v-if="isFinished">本次课程已完成</div>
+        <div class="jp-type--reset-notice" v-if="isFinished">本次练习已完成</div>
       </div>
     </div>
     <div class="jp-type--lesson">
@@ -81,8 +81,8 @@
 </template>
 
 <script>
-import PINGJIA_LETTERS_MAP from '../pingjia-letters'
-import PIANJIA_LETTERS_MAP from '../pianjia-letters'
+import PINGJIA_LETTERS_MAP from '../data/pingjia-letters'
+import PIANJIA_LETTERS_MAP from '../data/pianjia-letters'
 
 export default {
   data() {
@@ -100,7 +100,7 @@ export default {
       current: 0,
       currentWrong: false,
       currentLabel: [],
-      sliceLength: 30,
+      sliceLength: 50,
       timer: null, // 计时器
       timeTotal: 0, // 总耗时
       timeSpeed: 0, // 打字速度统计
@@ -256,7 +256,7 @@ export default {
 
 <style lang="scss">
 .jp-type {
-  padding: 80PX 40PX;
+  padding: 40PX 20PX;
   min-height: 100vh;
   background-color: #4a4648;
   color: white;
@@ -264,22 +264,22 @@ export default {
 
 .jp-type--ctr {
   position: relative;
-  min-width: 680PX;
-  max-width: 680PX;
+  min-width: 780PX;
+  max-width: 780PX;
 }
 
 .jp-type--hint {
   position: relative;
-  width: 180PX;
+  width: 150PX;
   margin: 0 auto;
   transform: translateX(-30PX);
-  margin-bottom: 110PX;
+  margin-bottom: 90PX;
 }
 
 .jp-type--preview, .jp-type--preview-other {
   position: relative;
   width: 100%;
-  height: 180PX;
+  height: 150PX;
   border-radius: 10PX;
   border: 3PX solid white;
 
@@ -310,21 +310,24 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  font-size: 130PX;
+  font-size: 110PX;
+  text-shadow: 2PX 2PX 8PX rgba(0, 0, 0, 0.3);
 }
 
 
 .jp-type--preview-other {
   position: absolute;
-  right: -130PX;
+  right: -100PX;
   bottom: 0;
-  width: 100PX;
-  height: 100PX;
+  width: 80PX;
+  height: 80PX;
+  border: 3PX solid white;
 }
 
 .jp-type--preview-text-other {
   z-index: 2;
-  font-size: 60PX;
+  font-size: 50PX;
+
 }
 
 .jp-type--stats {
@@ -346,9 +349,9 @@ export default {
   position: absolute;
   bottom: 0;
   transform: translateY(100%);
-  padding: 0 4PX;
+  padding: 0;
   width: 100%;
-  font-size: 14PX;
+  font-size: 12PX;
   line-height: 1.3;
   color: #ddd;
 }
@@ -360,28 +363,28 @@ export default {
 
 .jp-type--input {
   border-bottom: 1PX solid #dddddd;
-  width: 40PX;
-  height: 40PX;
-  line-height: 40PX;
+  width: 38PX;
+  height: 38PX;
+  line-height: 38PX;
   text-align: center;
   color: white;
-  font-size: 30PX;
+  font-size: 26PX;
 }
 
 .jp-type--show {
-  min-height: 90PX;
+  min-height: 120PX;
 
   line-height: 0;
   font-size: 0;
 }
 
 .jp-type--show-text {
-  width: 40PX;
-  height: 40PX;
-  line-height: 40PX;
+  width: 38PX;
+  height: 38PX;
+  line-height: 38PX;
   display: inline-block;
   text-align: center;
-  font-size: 30PX;
+  font-size: 26PX;
   text-shadow: 2PX 2PX 4PX rgba(0, 0, 0, 0.2);
 
   &.wrong {
@@ -427,24 +430,27 @@ export default {
 }
 
 .jp-type--reset {
-  box-shadow: 1PX 5PX 10PX rgba(0, 0, 0, 0.1);
 
   background-color: #6e6c7a;
-  width: 180PX;
-  font-size: 18PX;
+  width: 160PX;
+  font-size: 16PX;
+  letter-spacing: 1PX;
   height: 46PX;
   line-height: 46PX;
-  margin: 0 auto;
-  margin-top: 60PX;
+  margin: 60PX auto 0;
   text-align: center;
   border-radius: 6PX;
   cursor: pointer;
   transition: all 0.25s ease;
+  box-shadow: 1PX 5PX 15PX rgba(0, 0, 0, 0.2);
 
   &:hover {
-    transform: scale(1.04) translateY(-4PX);
+    letter-spacing: 3PX;
+    transform: scale(1.1) translateY(-6PX);
     background-color: #5a5964;
-    box-shadow: 1PX 5PX 16PX rgba(0, 0, 0, 0.3);
+    font-size: 18PX;
+
+    box-shadow: 1PX 5PX 20PX rgba(0, 0, 0, 0.3);
   }
 
   &:active {
