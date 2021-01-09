@@ -37,7 +37,8 @@
       </div>
       <div class="jp-type--show mpm-mt12 ">
         <span class="jp-type--show-text jp-type--input-text" v-for="(item,index) in inputList" :key="index" :class="{
-          wrong: item !== list[index].mainJP
+          wrong: item !== list[index].mainJP,
+          fix: list[index].isWrong && item === list[index].mainJP
         }">{{ item }}</span><input ref="input" class="jp-type--input"
                                    :class="{'wrong':currentWrong}"
                                    v-model.trim="input"
@@ -86,11 +87,24 @@ import PIANJIA_LETTERS_MAP from '../data/pianjia-letters'
 
 export default {
   data() {
+    const LETTERS_MAP = {
+      ...PINGJIA_LETTERS_MAP,
+      ...PIANJIA_LETTERS_MAP,
+    }
+
     return {
-      LETTERS_MAP: {
-        ...PINGJIA_LETTERS_MAP,
-        ...PIANJIA_LETTERS_MAP,
-      },
+      LETTERS_MAP: Object.keys(LETTERS_MAP).reduce((map, key) => {
+        const letterList = LETTERS_MAP[key]
+
+        map[key] = letterList.map((letterItem) => {
+          return {
+            ...letterItem,
+            isWrong: false,
+          }
+        })
+
+        return map
+      }, {}),
       PINGJIA_LETTERS_MAP,
       PIANJIA_LETTERS_MAP,
       list: [],
@@ -177,14 +191,15 @@ export default {
       for (let i = 0; i < this.sliceLength; i++) {
         const index = Math.floor(Math.random() * 100 % LETTER_LIST.length)
 
-        list.push(LETTER_LIST[index])
+        // 深拷贝该对象
+        list.push({ ...LETTER_LIST[index] })
       }
 
       this.list = list
 
       this.setInputFocus()
     },
-    // 按了回车键的时候判断值是否正确
+    // 按了回车键的时候判断值是否正确，做一个标记
     onCheck(e) {
       // 开始计时
       if (!this.timer) {
@@ -214,11 +229,22 @@ export default {
 
       this.inputList = this.inputList.concat(needInsertInput)
 
+      // 检查当前的输入是否发生错误
+      for (let i = 0; i < needInsertInput.length; i++) {
+        const targetIndex = this.current + i
+        const targetLetter = this.list[targetIndex].mainJP
+
+        console.log(111, this.list[targetIndex], targetLetter, needInsertInput[i], targetLetter !== needInsertInput[i])
+        if (targetLetter !== needInsertInput[i]) this.list[targetIndex].isWrong = true
+      }
+
+      // 递进序位
       if ((this.current + needInsertInput.length) >= this.sliceLength) {
         this.current = this.sliceLength
       } else {
         this.current += needInsertInput.length
       }
+
 
       this.reset()
     },
@@ -234,7 +260,7 @@ export default {
       this.reset()
     },
     onFinish() {
-      if (this.isFinished) this.change()
+      if (this.isFinished && !this.lastInput) this.change()
     },
     reset() {
       this.input = ''
@@ -388,7 +414,11 @@ export default {
   text-shadow: 2PX 2PX 4PX rgba(0, 0, 0, 0.2);
 
   &.wrong {
-    color: #ff8c8c;
+    color: #f77e7e;
+  }
+
+  &.fix {
+    color: #5ba55b;
   }
 }
 
@@ -430,7 +460,6 @@ export default {
 }
 
 .jp-type--reset {
-
   background-color: #6e6c7a;
   width: 160PX;
   font-size: 16PX;
@@ -448,13 +477,17 @@ export default {
     letter-spacing: 3PX;
     transform: scale(1.1) translateY(-6PX);
     background-color: #5a5964;
-    font-size: 18PX;
-
+    font-size: 17PX;
     box-shadow: 1PX 5PX 20PX rgba(0, 0, 0, 0.3);
   }
 
   &:active {
     transform: scale(1) translateY(4PX);
+
+    letter-spacing: 1PX;
+    background-color: #6e6c7a;
+    font-size: 16PX;
+    box-shadow: 1PX 5PX 15PX rgba(0, 0, 0, 0.2);
   }
 }
 
