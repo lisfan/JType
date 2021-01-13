@@ -38,7 +38,7 @@ export default {
   H_PIANJIA_LETTERS: [
     { luoma: 'ha', subJP: 'は', mainJP: 'ハ', subCN: '波', mainCN: '八', think: '待补充' },
     { luoma: 'hi', subJP: 'ひ', mainJP: 'ヒ', subCN: '比', mainCN: '比', think: '待补充' },
-    { luoma: 'hu', subJP: 'ふ', mainJP: 'フ', subCN: '不', mainCN: '不', think: '待补充' },
+    { luoma: 'hu(fu)', subJP: 'ふ', mainJP: 'フ', subCN: '不', mainCN: '不', think: '待补充' },
     { luoma: 'he', subJP: 'へ', mainJP: 'ヘ', subCN: '部', mainCN: '部', think: '待补充' },
     { luoma: 'ho', subJP: 'ほ', mainJP: 'ホ', subCN: '保', mainCN: '保', think: '待补充' },
   ],

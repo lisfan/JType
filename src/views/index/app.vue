@@ -56,7 +56,7 @@
     </div>
     <div class="jp-type--lesson">
       <div class="jp-type--lesson-head">课程章节</div>
-      <div class="jp-type--lesson-head">五十音<br />平假名</div>
+      <div class="jp-type--lesson-head">五十音<br/>平假名</div>
       <div class="jp-type--lesson-head">清音</div>
       <div class="jp-type--lesson-list">
         <div class="jp-type--lesson-section" v-for="(item,key,index) in PINGJIA_LETTERS_MAP" :key="key+item[0].mainJP"
@@ -64,7 +64,7 @@
              @click="change(key)">{{ item[0].mainJP }}行
         </div>
       </div>
-      <div class="jp-type--lesson-head">五十音<br />片假名</div>
+      <div class="jp-type--lesson-head">五十音<br/>片假名</div>
       <div class="jp-type--lesson-head">清音</div>
       <div class="jp-type--lesson-list">
         <div class="jp-type--lesson-section" v-for="(item,key,index) in PIANJIA_LETTERS_MAP" :key="key+item[0].mainJP"
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import chance from 'chance'
 import PINGJIA_LETTERS_MAP from '../data/pingjia-letters'
 import PIANJIA_LETTERS_MAP from '../data/pianjia-letters'
 
@@ -189,10 +190,11 @@ export default {
       const list = []
 
       for (let i = 0; i < this.sliceLength; i++) {
-        const index = Math.floor(Math.random() * 100 % LETTER_LIST.length)
+        const chance = new Chance()
+        const index = chance.integer({min: 0, max: LETTER_LIST.length - 1})
 
         // 深拷贝该对象
-        list.push({ ...LETTER_LIST[index] })
+        list.push({...LETTER_LIST[index]})
       }
 
       this.list = list

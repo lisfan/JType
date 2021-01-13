@@ -38,7 +38,7 @@ export default {
   H_PINGJIA_LETTERS: [
     { luoma: 'ha', mainJP: 'は', subJP: 'ハ', mainCN: '波', subCN: '八', think: '待补充' },
     { luoma: 'hi', mainJP: 'ひ', subJP: 'ヒ', mainCN: '比', subCN: '比', think: '待补充' },
-    { luoma: 'hu', mainJP: 'ふ', subJP: 'フ', mainCN: '不', subCN: '不', think: '待补充' },
+    { luoma: 'hu(fu)', mainJP: 'ふ', subJP: 'フ', mainCN: '不', subCN: '不', think: '待补充' },
     { luoma: 'he', mainJP: 'へ', subJP: 'ヘ', mainCN: '部', subCN: '部', think: '待补充' },
     { luoma: 'ho', mainJP: 'ほ', subJP: 'ホ', mainCN: '保', subCN: '保', think: '待补充' },
   ],
